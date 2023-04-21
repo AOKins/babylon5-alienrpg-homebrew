@@ -1,0 +1,36 @@
+{
+    "id": "babylon5-alienrpg",
+    "title": "Babylon 5 homebrew add-on for Alien RPG",
+    "description": "Aesthetic and minor gameplay modification to fit Alien RPG with the Babylon 5 setting",
+    "authors": [{
+        "name": "SuperRew"
+    }
+    ],
+    "version": "0.0.1",
+    "compatibility" : {
+        "minimum": "10",
+        "verified": "10"
+    },
+    "esmodules": [
+      "babylon5-alienrpg.js"
+    ],
+    "system": ["alienrpg"],
+    "relationships": {
+        "systems" : [{
+            "id": "alienrpg",
+            "type": "system",
+            "url": "https://github.com/pwatson100/alienrpg",
+            "manifest": "https://github.com/pwatson100/alienrpg/releases/latest/download/system.json"
+        }],
+        "dependencies": [{
+            "name": "lib-wrapper"
+        }]
+    },
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ]
+}
