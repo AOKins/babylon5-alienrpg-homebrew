@@ -21,9 +21,6 @@
             "type": "system",
             "url": "https://github.com/pwatson100/alienrpg",
             "manifest": "https://github.com/pwatson100/alienrpg/releases/latest/download/system.json"
-        }],
-        "dependencies": [{
-            "name": "lib-wrapper"
         }]
     },
     "languages": [
@@ -32,5 +29,8 @@
             "name": "English",
             "path": "lang/en.json"
         }
+    ],
+    "styles": [
+        "css/babylon5.css"
     ]
 }

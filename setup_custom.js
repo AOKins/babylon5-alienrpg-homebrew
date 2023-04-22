@@ -7,7 +7,6 @@ export function addPsiAbility() {
 
 
 export function extendPrepareDataWithAbility() {
-
     if (!this._source.system.attributes[PRATING_ABBREVIATION]) {
         this._source.system.attributes[PRATING_ABBREVIATION] = {
             "value" : 0,
@@ -15,9 +14,6 @@ export function extendPrepareDataWithAbility() {
             "mod": 0
         }    
     }
-}
-
-export function extendPrepareDataWithSkill() {
     if (!this._source.system.skills["telepathy"]) {
         this._source.system.skills["telepathy"] = {
             "value": 0,

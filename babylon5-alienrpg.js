@@ -1,12 +1,6 @@
-import { addPsiAbility, extendPrepareDataWithAbility, extendPrepareDataWithSkill } from "./setup_custom.js";
+import { addPsiAbility, extendPrepareDataWithAbility } from "./setup_custom.js";
 import { libWrapper } from './modules/libWrapperShim.js';
 import { MODULE_ID} from "./constants.js";
-/*
-TODOs
-
-Overwrite dice and pause 
-
-*/
 
 Hooks.once('init', () => {
     console.log(MODULE_ID, '|',' Initializing babylon5-alienrpg')
@@ -21,7 +15,6 @@ Hooks.once('init', () => {
         if (this.type == 'character') {
           try {
             extendPrepareDataWithAbility.bind(this)();
-            extendPrepareDataWithSkill.bind(this)();
           } catch (e) {
               ui.notifications.error("Something went wrong")
               console.error(e);
@@ -31,7 +24,6 @@ Hooks.once('init', () => {
       },
       'WRAPPER'
     );
-    //CONFIG.debug.hooks = true;
 });
 
 
@@ -40,11 +32,15 @@ export function appendCharacterSheet(app,html,data) {
 
   var attribElements = html[0].getElementsByClassName("abilities grid-Char-Att")[0]
 
+  if (!attribElements) {
+    attribElements = html[0].getElementsByClassName("abilities crt-grid-Char-Att")[0]
+  }
+
   var psi_attrib = document.createElement('h3')
   psi_attrib.setAttribute('class','resource-label')
   psi_attrib.setAttribute('data-attr','attribute')
   psi_attrib.setAttribute('data-label','Telepathy')
-  psi_attrib.innerHTML = "P Rating"
+  psi_attrib.innerHTML = "Psi Rating"
   attribElements.appendChild(psi_attrib)
 
   psi_attrib = document.createElement('input')
@@ -57,13 +53,11 @@ export function appendCharacterSheet(app,html,data) {
   attribElements.appendChild(psi_attrib)
 }
 
-
 Hooks.on("renderActorSheet", (app, html, data) => {
   if (app.actor.type == "character") {
     appendCharacterSheet(app,html, data)
   }
 });
-
 
 Hooks.on('renderPause', () => {
   var pauseItem = $("#pause")
@@ -74,7 +68,6 @@ Hooks.on('renderPause', () => {
 });
 
 Hooks.once('diceSoNiceReady', (dice3d) => {
-  console.log("ASO")
   dice3d.addColorset({
     name: 'white',
     description: 'White',
@@ -102,7 +95,7 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
   dice3d.addDicePreset({
     type: 'db',
     labels: [
-      'modules/babylon5-alienrpg/assets/dice/normal/b1.png',
+      'modules/babylon5-alienrpg/assets/dice/normal/b_blank.png',
       'modules/babylon5-alienrpg/assets/dice/normal/b_blank.png',
       'modules/babylon5-alienrpg/assets/dice/normal/b_blank.png',
       'modules/babylon5-alienrpg/assets/dice/normal/b_blank.png',
@@ -125,4 +118,28 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
     colorset: 'white',
     system: 'babylon5-alienrpg',
   });
-})
+});
+
+Hooks.on('renderChatMessage', (args, html, data) => {
+  var msgContent = html[0].getElementsByClassName('chatBG')[0]
+
+  for (var i = 0; i < msgContent.childNodes.length; i++ ) {
+    var child = msgContent.childNodes[i]
+    if (child.innerHTML) {
+      child.innerHTML = child.innerHTML.replaceAll("Yellow", "Stress")
+      child.innerHTML = child.innerHTML.replaceAll("Sixes", "Fives")
+      child.innerHTML = child.innerHTML.replaceAll("Ones", "Zeros")  
+    }
+    if (child.childNodes) {
+      var grandchildren = child.childNodes
+
+      for (var j = 0; j < grandchildren.length; j++ ) {
+        var grandchild = grandchildren[j]
+        console.log(grandchild)
+        if (grandchild.className) {
+          grandchild.className = grandchild.className.replaceAll("alien-diceface","babylon5-diceface")
+        }
+      }
+    }
+  }
+});
