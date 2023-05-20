@@ -1,6 +1,6 @@
 import { addPsiAbility, extendPrepareDataWithAbility } from "./setup_custom.js";
 import { libWrapper } from './modules/libWrapperShim.js';
-import { MODULE_ID} from "./constants.js";
+const MODULE_ID = 'babylon5-alienrpg'
 
 Hooks.once('init', () => {
     console.log(MODULE_ID, '|',' Initializing babylon5-alienrpg')
@@ -28,7 +28,7 @@ Hooks.once('init', () => {
 
 
 export function appendCharacterSheet(app,html,data) {
-  // Append Psi Rating attribute
+  // Append Psi Rating attribute to the character sheet
 
   var attribElements = html[0].getElementsByClassName("abilities grid-Char-Att")[0]
 
@@ -59,12 +59,10 @@ Hooks.on("renderActorSheet", (app, html, data) => {
   }
 });
 
-Hooks.on('renderPause', () => {
-  var pauseItem = $("#pause")
-  if (pauseItem.attr('class') !== 'paused') return;
-  pauseItem[0].children[0].src = 'modules/babylon5-alienrpg/assets/pause.png'
-  pauseItem[0].children[0].src = 'modules/babylon5-alienrpg/assets/pause.png'
-  pauseItem[0].children[0].setAttribute('class', '')
+Hooks.on('renderPause', (_app, html, options) => {
+  var pause_img = html.find('img[src="systems/alienrpg/images/paused-alien.png"]')
+  pause_img.attr("src",'modules/babylon5-alienrpg/assets/pause.png')
+  pause_img.attr("class",'')
 });
 
 Hooks.once('diceSoNiceReady', (dice3d) => {
@@ -121,25 +119,18 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
 });
 
 Hooks.on('renderChatMessage', (args, html, data) => {
+  // Overwrite rolls to have more aligned text
   var msgContent = html[0].getElementsByClassName('chatBG')[0]
 
+  if (!msgContent) {
+    return;
+  }
   for (var i = 0; i < msgContent.childNodes.length; i++ ) {
     var child = msgContent.childNodes[i]
     if (child.innerHTML) {
       child.innerHTML = child.innerHTML.replaceAll("Yellow", "Stress")
       child.innerHTML = child.innerHTML.replaceAll("Sixes", "Fives")
       child.innerHTML = child.innerHTML.replaceAll("Ones", "Zeros")  
-    }
-    if (child.childNodes) {
-      var grandchildren = child.childNodes
-
-      for (var j = 0; j < grandchildren.length; j++ ) {
-        var grandchild = grandchildren[j]
-        console.log(grandchild)
-        if (grandchild.className) {
-          grandchild.className = grandchild.className.replaceAll("alien-diceface","babylon5-diceface")
-        }
-      }
     }
   }
 });

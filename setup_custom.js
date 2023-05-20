@@ -1,10 +1,8 @@
-import { PRATING_ABBREVIATION } from './constants.js';
-
+const PRATING_ABBREVIATION = "psi"
 export function addPsiAbility() {
     CONFIG.ALIENRPG.attributes[PRATING_ABBREVIATION] = "Psi"
     CONFIG.ALIENRPG.skills['telepathy'] = "Telepathy"
 }
-
 
 export function extendPrepareDataWithAbility() {
     if (!this._source.system.attributes[PRATING_ABBREVIATION]) {

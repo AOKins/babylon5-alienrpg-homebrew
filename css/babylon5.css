@@ -1,5 +1,4 @@
-
-.babylon5-diceface-b0 {
+.alien-diceface-b0 {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -8,7 +7,7 @@
   background: url(../assets/dice/normal/b_blank_small.png) no-repeat top left;
 }
 
-.babylon5-diceface-b6 {
+.alien-diceface-b6 {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -17,7 +16,7 @@
   background: url(../assets/dice/normal/b6_small.png) no-repeat top left;
 }
 
-.babylon5-diceface-y0 {
+.alien-diceface-y0 {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -26,7 +25,7 @@
   background: url(../assets/dice/shadow/s_blank.png) no-repeat top left;
 }
 
-.babylon5-diceface-y1 {
+.alien-diceface-y1 {
   display: inline-block;
   width: 30px;
   height: 30px;
@@ -35,11 +34,16 @@
   background: url(../assets/dice/shadow/s1_small.png) no-repeat top left;
 }
 
-.babylon5-diceface-y6 {
+.alien-diceface-y6 {
   display: inline-block;
   width: 30px;
   height: 30px;
   padding: 0px;
   margin: 1px;
   background: url(../assets/dice/shadow/s6_small.png) no-repeat top left;
+}
+
+:root {
+  --chatbackground: url(/modules/babylon5-alienrpg/assets/chat_bg.png);
+  --journalback: url(/modules/babylon5-alienrpg/assets/b5_journal_bg.png);
 }
